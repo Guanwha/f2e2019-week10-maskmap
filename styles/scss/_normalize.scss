@@ -1,0 +1,24 @@
+/* app reset */
+// box-sizing
+* {
+          box-sizing: border-box;
+    -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+
+  font-family: 'Noto Sans TC', sans-serif;
+  user-select: none;
+}
+
+// fill the whole view
+html, body {
+  width: 100%;
+  height: 100%;
+  background: pink;
+}
+
+// remove default outline when focus
+button {
+  &:focus {
+    outline-width: 0;
+  }
+}
