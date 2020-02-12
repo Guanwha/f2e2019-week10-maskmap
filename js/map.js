@@ -31,7 +31,16 @@ const extractLatLong = (position) => {
 
   // create/update my location marker
   if (!myMarker) {
-    myMarker = L.marker(myLocation).addTo(map).bindPopup('You\'re here').openPopup();
+    var gpsIcon = new L.Icon({
+      iconUrl: '/images/map_marker_me.svg',
+      shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+      iconSize: [32, 43],
+      iconAnchor: [16, 43],
+      shadowSize: [43, 43],
+      shadowAnchor: [14, 43],
+      popupAnchor: [0, -43],
+    });
+    myMarker = L.marker(myLocation, { icon: gpsIcon }).addTo(map).bindPopup('You\'re here').openPopup();
   }
   else {
     myMarker.setLatLng(myLocation);
