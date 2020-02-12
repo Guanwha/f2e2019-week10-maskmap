@@ -2,6 +2,7 @@
 let myLocation = [25.047794, 121.516947];   // default location
 let myMarker = null;                        // my location marker
 let map;
+let markers = null;                         // MarkerClusterGroup
 
 
 // initialize the map on the "map" div with a given center and zoom
@@ -16,6 +17,9 @@ export const initMap = () => {
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors'
   }).addTo(map);
+
+  // use MarkerClusterGroup to limit marker number
+  markers = new L.MarkerClusterGroup().addTo(map);
 };
 
 // get the location (asynchronous)
@@ -54,8 +58,9 @@ const extractLatLong = (position) => {
 export const extractPharmacies = (responseText) => {
   let data = JSON.parse(responseText).features;
   for (let i=0; i<data.length; i++) {
-    L.marker([data[i].geometry.coordinates[1], data[i].geometry.coordinates[0]]).addTo(map)
-     .bindPopup(data[i].properties.name);
+    markers.addLayer(L.marker([data[i].geometry.coordinates[1], data[i].geometry.coordinates[0]])
+                      .bindPopup(data[i].properties.name));
   }
+  map.addLayer(markers);
 }
 
