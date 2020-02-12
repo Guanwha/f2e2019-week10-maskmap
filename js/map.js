@@ -50,3 +50,12 @@ const extractLatLong = (position) => {
   map.setView(myLocation);
 }
 
+// extract pharmacies from api
+export const extractPharmacies = (responseText) => {
+  let data = JSON.parse(responseText).features;
+  for (let i=0; i<data.length; i++) {
+    L.marker([data[i].geometry.coordinates[1], data[i].geometry.coordinates[0]]).addTo(map)
+     .bindPopup(data[i].properties.name);
+  }
+}
+

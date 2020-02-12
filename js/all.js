@@ -1,7 +1,12 @@
 import * as map from "./map.js";
+import * as api from "./api.js";
 
+
+///// main flow /////
 map.initMap();
 map.getUserLocation();
+api.getPharmacies(map.extractPharmacies);
+
 
 ///// buttons /////
 
