@@ -68,7 +68,7 @@ export const initMap = () => {
   }).addTo(map);
 
   // use MarkerClusterGroup to limit marker number
-  markers = new L.MarkerClusterGroup().addTo(map);
+  markers = new L.MarkerClusterGroup({disableClusteringAtZoom: 16}).addTo(map);
 };
 
 // get the location (asynchronous)
