@@ -38,32 +38,38 @@
   top: 0;
   left: 0;
   z-index: 1000;                        // leaflet's control button is 999
-  background: white;
-  box-shadow: 0px 0px 40px #333333;
-}
-.btn-menu-ctrl {
-  width: 1.125rem;
-  height: 3rem;
-  position: absolute;
-  top: 50%;
-  right: -1.125rem;
-  background-color: $clr-main;
-  border-width: 0;
-  border-radius: 0 12px 12px 0;
-  &:hover {
-    filter: drop-shadow(1px 0 5px $clr-main);
+  box-shadow: 0px 0px 1.125rem #333333;
+  
+  .content {
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    background: #F6F6F6;
   }
-  &:focus {
-    outline-width: 0;                   // overwrite the Bootstrap's setting
-  }
+  .btn-menu-ctrl {
+    width: 1.125rem;
+    height: 3rem;
+    position: absolute;
+    top: 50%;
+    right: -1.125rem;
+    background-color: $clr-main;
+    border-width: 0;
+    border-radius: 0 12px 12px 0;
+    &:hover {
+      filter: drop-shadow(1px 0 5px $clr-main);
+    }
+    &:focus {
+      outline-width: 0;                   // overwrite the Bootstrap's setting
+    }
 
-  .icon {
-    width: 0.25rem;
-    height: 0.5rem;
-    background: url('/images/icon_collapse_arrow.svg') center center no-repeat;
-    background-size: cover;
-    transition: 1s;
-    transform: rotate(180deg);
+    .icon {
+      width: 0.25rem;
+      height: 0.5rem;
+      background: url('/images/icon_collapse_arrow.svg') center center no-repeat;
+      background-size: cover;
+      transition: 1s;
+      transform: rotate(180deg);
+    }
   }
 }
 
