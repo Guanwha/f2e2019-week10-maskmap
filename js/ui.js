@@ -1,32 +1,32 @@
 
-// sidebar open/close
-let elNavBar = document.querySelector('.navbar');
-let elBtnNavCtrl = document.querySelector('.btn-nav-ctrl');
-let elBtnNavCtrlIcon = document.querySelector('.btn-nav-ctrl .icon');
+// menu open/close
+let elNavBar = document.querySelector('.menu');
+let elBtnMenuCtrl = document.querySelector('.btn-menu-ctrl');
+let elBtnMenuCtrlIcon = document.querySelector('.btn-menu-ctrl .icon');
 
 elNavBar.dataset.isopen = 0;
-elBtnNavCtrl.addEventListener('click', () => {
+elBtnMenuCtrl.addEventListener('click', () => {
   if (elNavBar.dataset.isopen == 1) {
-    // close sidebar
+    // close menu
     elNavBar.style.width = 0;
     elNavBar.dataset.isopen = 0;
-    elBtnNavCtrlIcon.style.transform = "rotate(180deg)";
+    elBtnMenuCtrlIcon.style.transform = "rotate(180deg)";
   }
   else {
-    // open sidebar
+    // open menu
     elNavBar.style.width = '90%';
     elNavBar.dataset.isopen = 1;
-    elBtnNavCtrlIcon.style.transform = "rotate(0deg)";
+    elBtnMenuCtrlIcon.style.transform = "rotate(0deg)";
   }
 });
 
 let elMap = document.getElementById('map');
 elMap.addEventListener('click', () => {
   if (elNavBar.dataset.isopen == 1) {
-    // close sidebar
+    // close menu
     elNavBar.style.width = 0;
     elNavBar.dataset.isopen = 0;
-    elBtnNavCtrlIcon.style.transform = "rotate(180deg)";
+    elBtnMenuCtrlIcon.style.transform = "rotate(180deg)";
   }
 });
 
