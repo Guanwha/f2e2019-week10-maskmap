@@ -1,4 +1,24 @@
 
+// common setting
+.text-sm {
+  font-size: $f-size-1;
+}
+.text-md {
+  font-size: $f-size-2;
+}
+.text-lg {
+  font-size: $f-size-3;
+}
+.text-xl {
+  font-size: $f-size-4;
+}
+.text-title {
+  color: $clr-font-title;
+}
+.text-msg {
+  color: $clr-font-msg;
+}
+
 // map
 #map {
   width: 100%;
@@ -45,6 +65,19 @@
     height: 100%;
     overflow-x: hidden;
     background: #F6F6F6;
+    .menu-header {
+      width: 100%;
+      height: 150px;
+      background: $clr-main;
+    }
+    .menu-selection-row {
+      width: 100%;
+      padding: 1rem 1rem 0 1rem;
+    }
+    .menu-list {
+      width: 100%;
+      margin-top: 1rem;
+    }
   }
   .btn-menu-ctrl {
     width: 1.125rem;
@@ -70,6 +103,80 @@
       transition: 1s;
       transform: rotate(180deg);
     }
+  }
+}
+
+// custom button style instead of Bootstrap's btn-* class
+.btn-dist-select {
+  color: white !important;
+  background-color: $clr-main !important;
+  border-color: $clr-main !important;
+  box-shadow: 0 0 0 0 transparent !important;
+  &:hover {
+    box-shadow: 0 0 0 0.2rem $clr-main-half !important;
+  }
+}
+.btn-mask-select {
+  color: white !important;
+  background-color: $clr-main-half !important;
+  border-color: $clr-main-half !important;
+  box-shadow: 0 0 0 0 transparent !important;
+  &.active {
+    background-color: $clr-main !important;
+    border-color: $clr-main !important;
+  }
+  &:hover {
+    box-shadow: 0 0 0 0.2rem $clr-main-half !important;
+  }
+}
+
+// pharmacy list
+.pharmacy-card {
+  padding: 1.5rem !important;
+}
+.pharmacy-title {
+  margin-bottom: 0.5rem;
+  color: $clr-font-title;
+  font-size: $f-size-3;
+}
+.info-icon {
+  width: $f-size-1;
+  height: $f-size-1;
+  margin-right: 0.5rem;
+}
+.pharmacy-info {
+  color: $clr-font-msg;
+  font-size: $f-size-1;
+}
+.pharmacy-mask-info {
+  margin-top: $f-size-1;
+
+  .mask-info {
+    width: 50%;
+    height: 44px;
+    text-align: center;
+    line-height: 44px;
+    font-size: $f-size-1;
+  }
+  .mask-info-adult {
+    border-radius: 4px 0px 0px 4px;
+  }
+  .mask-info-child {
+    border-radius: 0px 4px 4px 0px;
+  }
+  .has-adult-mask {
+    background: $clr-adult;
+    color: $clr-font-active;
+    box-shadow: 0 0 0.2rem 0.2rem $clr-adult-half;
+  }
+  .has-child-mask {
+    background: $clr-child;
+    color: $clr-font-active;
+    box-shadow: 0 0 0.2rem 0.2rem $clr-child-half;
+  }
+  .none-mask {
+    background: $clr-btn-disabled;
+    color: $clr-font-disabled;
   }
 }
 

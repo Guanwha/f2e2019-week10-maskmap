@@ -21,7 +21,63 @@
   <div id="map"></div>
   <button class="btn-reloc"></button>
   <div class="menu">
-    <div class="content"></div>
+    <div class="content">
+      <!-- header -->
+      <div class="menu-header"></div>
+      <!-- selection -->
+      <div class="menu-selection-row font-weight-bold text-title text-xl">附近的藥局</div>
+      <div class="menu-selection-row d-flex justify-content-between">
+        <!-- distance -->
+        <div class="dropdown">
+          <button class="btn btn-dist-select dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            距離
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="#">800 公尺</a>
+            <a class="dropdown-item" href="#">1200 公尺</a>
+            <a class="dropdown-item" href="#">2000 公尺</a>
+          </div>
+        </div>
+        <!-- mask select -->
+        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+          <!-- select adult -->
+          <label class="btn btn-mask-select">
+            <input type="checkbox">成人口罩
+          </label>
+          <!-- select child -->
+          <label class="btn btn-mask-select">
+            <input type="checkbox">兒童口罩
+          </label>
+        </div>
+      </div>
+      <!-- show invalid pharmacy -->
+      <div class="menu-selection-row">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+          <label class="form-check-label" for="defaultCheck1">
+            <span class="text-msg">隱藏已售完的藥局</span>
+          </label>
+        </div>
+      </div>
+      <!-- pharmacy list -->
+      <div class="menu-list">
+        <div class="list-group" id="pharmacy-list">
+          <a href="#" class="pharmacy-card list-group-item list-group-item-action">
+            <div class="pharmacy-title">禾豐藥局</div>
+            <div class="pharmacy-info d-flex align-items-center">
+              <img class="info-icon" src="./images/icon_marker.svg" alt="">台中市太平區樹孝路31號
+            </div>
+            <div class="pharmacy-info d-flex align-items-center">
+              <img class="info-icon" src="./images/icon_phone.svg" alt="">04 -23915599
+            </div>
+            <div class="pharmacy-mask-info clear-fix">
+              <div class="mask-info mask-info-adult has-child-mask float-left">成人：132 個</div>
+              <div class="mask-info mask-info-child has-adult-mask float-right">兒童：18 個</div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
     <button class="btn-menu-ctrl"><div class="icon"></div></button>
   </div>
 
