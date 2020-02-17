@@ -42,7 +42,7 @@
   top: 10px;
   right: 10px;
   z-index: 999;
-  background: url('/images/icon_gps.svg') center center no-repeat;
+  background: url('../../images/icon_gps.svg') center center no-repeat;
   background-size: 80% 80%;
   background-color: #fcfcfc;
   box-shadow: 0 0 10px #5b5b5b;
@@ -118,7 +118,7 @@
     .icon {
       width: 0.25rem;
       height: 0.5rem;
-      background: url('/images/icon_collapse_arrow.svg') center center no-repeat;
+      background: url('../../images/icon_collapse_arrow.svg') center center no-repeat;
       background-size: cover;
       transition: 1s;
       transform: rotate(180deg);
