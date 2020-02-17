@@ -5,6 +5,8 @@ let map;
 let markers = null;                         // MarkerClusterGroup
 let range = 0.8;                            // add to menu list if location is in this range
 let pharmacies = null;                      // total pharmacies data
+let pharmacyItems = [];                     // save generated pharmacy info
+let pharmacyMarkers = {};                   // save generated pharmacy markers
 let nMaskAdult = 0;
 let nMaskChild = 0;
 let isGPSCatched = false;                   // check if gps is catched
@@ -105,6 +107,7 @@ export const extractPharmacies = (responseText) => {
   pharmacies = data;
   nMaskAdult = 0;
   nMaskChild = 0;
+  pharmacyMarkers = {};
   for (let i=0; i<data.length; i++) {
     // decide icon type
     let icon = null;
@@ -122,15 +125,17 @@ export const extractPharmacies = (responseText) => {
     }
 
     // create marker
-    markers.addLayer(L.marker([data[i].geometry.coordinates[1], data[i].geometry.coordinates[0]], { icon: icon })
-                      .bindPopup(genPopup(data[i].properties)));
+    let marker = L.marker([data[i].geometry.coordinates[1], data[i].geometry.coordinates[0]], { icon: icon })
+                  .bindPopup(genPopup(data[i].properties));
+    pharmacyMarkers[`${data[i].properties.id}`] = marker;
+    markers.addLayer(marker);
 
     // statistic
     nMaskAdult += data[i].properties.mask_adult;
     nMaskChild += data[i].properties.mask_child;
   }
   map.addLayer(markers);
-  console.log(`成人口罩剩餘：${nMaskAdult}。兒童口罩剩餘：${nMaskChild}。`)
+  console.log(`成人口罩剩餘：${nMaskAdult}。兒童口罩剩餘：${nMaskChild}。`);
 
   // update pharmacy list
   findNearPharmacies();
@@ -151,6 +156,7 @@ export const findNearPharmacies = () => {
 
   let elList = document.querySelector('#pharmacy-list');
   elList.innerHTML = '';
+  pharmacyItems = [];
 
   for (let i=0; i<pharmacies.length; i++) {
     let properties = pharmacies[i].properties;
@@ -198,16 +204,36 @@ export const findNearPharmacies = () => {
       </div>
       `;
       a.innerHTML = html;
+
+      // save to array
+      let idx = pharmacyItems.length;
+      let pharmacy = {};
+      pharmacy.id = properties.id;
+      pharmacy.lat = coordinates[1];
+      pharmacy.long = coordinates[0];
+      pharmacy.nMaskAdult = properties.mask_adult;
+      pharmacy.nMaskChild = properties.mask_child;
+      pharmacy.name = properties.name;
+      pharmacy.address = properties.address;
+      pharmacy.phone = properties.phone;
+      pharmacy.html = html;
+      pharmacyItems.push(pharmacy);
+
+      // set listener
       a.addEventListener('click', (e) => {
-        setView(coordinates[1], coordinates[0])
+        focusPharmacy(pharmacy);
       }, true);
+
+      // push to menu list
       elList.appendChild(a);
     }
   }
 }
+// convert degree to radian
 let deg2rad = (deg) => {
   return deg / 180 * Math.PI;
 };
+// calculate the distance(km) from latitude/longitude
 let kmFromLatLong = (lat1, long1, lat2, long2) => {
     let radLat1 = deg2rad(lat1);
     let radLat2 = deg2rad(lat2);
@@ -218,9 +244,88 @@ let kmFromLatLong = (lat1, long1, lat2, long2) => {
     return 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(a / 2), 2) + Math.cos(radLat1) * Math.cos(radLat2) * Math.pow(Math.sin(b / 2), 2))) * 6378.137;
 };
 
-const setView = (lat, long) => {
-  if (map) {
-    map.setView([lat, long]);
+// filter nearby pharmacy list
+export const filterPharmacyList = (showAdult, showChild, hideSoldOut) => {
+  if (pharmacyItems.length === 0) return;
+
+  let elList = document.querySelector('#pharmacy-list');
+  elList.innerHTML = '';
+
+  for (let i=0; i<pharmacyItems.length; i++) {
+    let pharmacy = pharmacyItems[i];
+
+    if (showAdult && pharmacy.nMaskAdult === 0) continue;
+    if (showChild && pharmacy.nMaskChild === 0) continue;
+    if (hideSoldOut && pharmacy.nMaskAdult === 0 && pharmacy.nMaskChild === 0) continue;
+
+    // prepare string
+    let adultClassStr;
+    let adultMaskStr;
+    if (pharmacy.nMaskAdult > 0) {
+      adultClassStr = `has-adult-mask`;
+      adultMaskStr = `成人：${pharmacy.nMaskAdult} 個`;
+    }
+    else {
+      adultClassStr = `none-mask`;
+      adultMaskStr = `成人：已售完`;
+    }
+    let childClassStr;
+    let childMaskStr;
+    if (pharmacy.nMaskChild > 0) {
+      childClassStr = `has-child-mask`;
+      childMaskStr = `兒童：${pharmacy.nMaskChild} 個`;
+    }
+    else {
+      childClassStr = `none-mask`;
+      childMaskStr = `兒童：已售完`;
+    }
+
+    // combine the html
+    let a = document.createElement('a');
+    a.setAttribute('class', 'pharmacy-card list-group-item list-group-item-action');
+    a.setAttribute('id', `pharmacy${pharmacy.id}`);
+    a.setAttribute('data-lat', pharmacy.lat);
+    a.setAttribute('data-long', pharmacy.long);
+    let html = `
+    <div class="pharmacy-title">${pharmacy.name}</div>
+    <div class="pharmacy-info d-flex align-items-center">
+      <img class="info-icon" src="./images/icon_marker.svg" alt="">${pharmacy.address}
+    </div>
+    <div class="pharmacy-info d-flex align-items-center">
+      <img class="info-icon" src="./images/icon_phone.svg" alt="">${pharmacy.phone}
+    </div>
+    <div class="pharmacy-mask-info clear-fix">
+      <div class="mask-info mask-info-adult ${adultClassStr} float-left">${adultMaskStr}</div>
+      <div class="mask-info mask-info-child ${childClassStr} float-right">${childMaskStr}</div>
+    </div>
+    `;
+    a.innerHTML = html;
+    a.addEventListener('click', (e) => {
+      focusPharmacy(pharmacy);
+    }, false);
+    elList.appendChild(a);
   }
 }
 
+// click pharmacy in the pharmacy list
+const focusPharmacy = (pharmacy) => {
+  flyTo(pharmacy.lat, pharmacy.long, 16);
+  pharmacyMarkers[pharmacy.id].openPopup();
+}
+
+// set the map center, zoom
+const flyTo = (lat, long, zoom) => {
+  if (map) {
+    if (zoom) {
+      map.flyTo([lat, long], zoom);
+    }
+    else {
+      map.flyTo([lat, long]);
+    }
+  }
+}
+
+// set the filter range
+export const setRange = (filterRange) => {
+  range = filterRange;
+}
