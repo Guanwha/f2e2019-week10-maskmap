@@ -106,6 +106,13 @@
   }
 }
 
+// overwrite Bootstrap's dropdown
+.dropdown-item {
+  &.active, &:active {
+    background: $clr-main !important;
+  }
+}
+
 // custom button style instead of Bootstrap's btn-* class
 .btn-dist-select {
   color: white !important;

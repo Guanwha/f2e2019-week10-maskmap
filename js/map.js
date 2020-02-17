@@ -313,7 +313,7 @@ const focusPharmacy = (pharmacy) => {
   pharmacyMarkers[pharmacy.id].openPopup();
 }
 
-// set the map center
+// set the map center, zoom
 const flyTo = (lat, long, zoom) => {
   if (map) {
     if (zoom) {
@@ -325,3 +325,7 @@ const flyTo = (lat, long, zoom) => {
   }
 }
 
+// set the filter range
+export const setRange = (filterRange) => {
+  range = filterRange;
+}
