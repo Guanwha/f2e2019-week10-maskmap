@@ -12,11 +12,20 @@
 .text-xl {
   font-size: $f-size-4;
 }
+.text-xxl {
+  font-size: $f-size-5;
+}
 .text-title {
   color: $clr-font-title;
 }
 .text-msg {
   color: $clr-font-msg;
+}
+.text-clr-primary {
+  color: $clr-main;
+}
+.text-clr-second {
+  color: $clr-second;
 }
 
 // map
@@ -69,6 +78,17 @@
       width: 100%;
       height: 150px;
       background: $clr-main;
+      color: $clr-white;
+      padding: 1rem 1.5rem 1rem 1.5rem;
+      .icon {
+        width: 1.5rem;
+        height: 1.5rem;
+        background-image: url('../../images/icon_help.svg');
+        background-repeat: no-repeat;
+        background-color: transparent;
+        border-width: 0;
+        outline-width: 0;
+      }
     }
     .menu-selection-row {
       width: 100%;
@@ -103,6 +123,13 @@
       transition: 1s;
       transform: rotate(180deg);
     }
+  }
+}
+
+// overwrite Bootstrap's dropdown
+.dropdown-item {
+  &.active, &:active {
+    background: $clr-main !important;
   }
 }
 
