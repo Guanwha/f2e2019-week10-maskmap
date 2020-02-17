@@ -151,7 +151,6 @@ export const findNearPharmacies = () => {
 
   let elList = document.querySelector('#pharmacy-list');
   elList.innerHTML = '';
-  pharmacyItems = [];
 
   for (let i=0; i<pharmacies.length; i++) {
     let properties = pharmacies[i].properties;
@@ -220,7 +219,6 @@ let kmFromLatLong = (lat1, long1, lat2, long2) => {
 };
 
 const setView = (lat, long) => {
-  console.log(lat, long);
   if (map) {
     map.setView([lat, long]);
   }
