@@ -1,5 +1,6 @@
 import * as map from "./map.js";
 import * as api from "./api.js";
+import "./ui.js";
 
 
 ///// main flow /////
