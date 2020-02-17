@@ -41,21 +41,21 @@
         <!-- mask select -->
         <div class="btn-group btn-group-toggle" data-toggle="buttons">
           <!-- select adult -->
-          <label class="btn btn-mask-select">
+          <label id="showAdult" class="btn btn-mask-select">
             <input type="checkbox">成人口罩
           </label>
           <!-- select child -->
-          <label class="btn btn-mask-select">
+          <label id="showChild" class="btn btn-mask-select">
             <input type="checkbox">兒童口罩
           </label>
         </div>
       </div>
       <!-- show invalid pharmacy -->
       <div class="menu-selection-row">
-        <div class="form-check">
+        <div id="hideSoldOut" class="form-check">
           <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
           <label class="form-check-label" for="defaultCheck1">
-            <span class="text-msg">隱藏已售完的藥局</span>
+            <span class="text-msg">隱藏全部已售完的藥局</span>
           </label>
         </div>
       </div>
