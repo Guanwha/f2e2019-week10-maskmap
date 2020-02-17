@@ -6,6 +6,7 @@ let markers = null;                         // MarkerClusterGroup
 let range = 0.8;                            // add to menu list if location is in this range
 let pharmacies = null;                      // total pharmacies data
 let pharmacyItems = [];                     // save generated pharmacy info
+let pharmacyMarkers = {};                   // save generated pharmacy markers
 let nMaskAdult = 0;
 let nMaskChild = 0;
 let isGPSCatched = false;                   // check if gps is catched
@@ -106,6 +107,7 @@ export const extractPharmacies = (responseText) => {
   pharmacies = data;
   nMaskAdult = 0;
   nMaskChild = 0;
+  pharmacyMarkers = {};
   for (let i=0; i<data.length; i++) {
     // decide icon type
     let icon = null;
@@ -123,15 +125,17 @@ export const extractPharmacies = (responseText) => {
     }
 
     // create marker
-    markers.addLayer(L.marker([data[i].geometry.coordinates[1], data[i].geometry.coordinates[0]], { icon: icon })
-                      .bindPopup(genPopup(data[i].properties)));
+    let marker = L.marker([data[i].geometry.coordinates[1], data[i].geometry.coordinates[0]], { icon: icon })
+                  .bindPopup(genPopup(data[i].properties));
+    pharmacyMarkers[`${data[i].properties.id}`] = marker;
+    markers.addLayer(marker);
 
     // statistic
     nMaskAdult += data[i].properties.mask_adult;
     nMaskChild += data[i].properties.mask_child;
   }
   map.addLayer(markers);
-  console.log(`成人口罩剩餘：${nMaskAdult}。兒童口罩剩餘：${nMaskChild}。`)
+  console.log(`成人口罩剩餘：${nMaskAdult}。兒童口罩剩餘：${nMaskChild}。`);
 
   // update pharmacy list
   findNearPharmacies();
@@ -200,10 +204,6 @@ export const findNearPharmacies = () => {
       </div>
       `;
       a.innerHTML = html;
-      a.addEventListener('click', (e) => {
-        setView(coordinates[1], coordinates[0])
-      }, true);
-      elList.appendChild(a);
 
       // save to array
       let idx = pharmacyItems.length;
@@ -218,6 +218,14 @@ export const findNearPharmacies = () => {
       pharmacy.phone = properties.phone;
       pharmacy.html = html;
       pharmacyItems.push(pharmacy);
+
+      // set listener
+      a.addEventListener('click', (e) => {
+        focusPharmacy(pharmacy);
+      }, true);
+
+      // push to menu list
+      elList.appendChild(a);
     }
   }
 }
@@ -293,16 +301,27 @@ export const filterPharmacyList = (showAdult, showChild, hideSoldOut) => {
     `;
     a.innerHTML = html;
     a.addEventListener('click', (e) => {
-      setView(pharmacy.lat, pharmacy.long);
-    }, true);
+      focusPharmacy(pharmacy);
+    }, false);
     elList.appendChild(a);
   }
 }
 
+// click pharmacy in the pharmacy list
+const focusPharmacy = (pharmacy) => {
+  flyTo(pharmacy.lat, pharmacy.long, 16);
+  pharmacyMarkers[pharmacy.id].openPopup();
+}
+
 // set the map center
-const setView = (lat, long) => {
+const flyTo = (lat, long, zoom) => {
   if (map) {
-    map.setView([lat, long]);
+    if (zoom) {
+      map.flyTo([lat, long], zoom);
+    }
+    else {
+      map.flyTo([lat, long]);
+    }
   }
 }
 
