@@ -13,7 +13,7 @@ let isGPSCatched = false;                   // check if gps is catched
 
 // icons
 let gpsIcon = new L.Icon({
-  iconUrl: '/images/map_marker_me.svg',
+  iconUrl: './images/map_marker_me.svg',
   shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
   iconSize: [32, 43],
   iconAnchor: [16, 43],
@@ -22,7 +22,7 @@ let gpsIcon = new L.Icon({
   popupAnchor: [0, -43],
 });
 let adultIcon = new L.Icon({
-  iconUrl: '/images/map_marker_adult.svg',
+  iconUrl: './images/map_marker_adult.svg',
   shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
   iconSize: [32, 43],
   iconAnchor: [16, 43],
@@ -31,7 +31,7 @@ let adultIcon = new L.Icon({
   popupAnchor: [0, -43],
 });
 let childIcon = new L.Icon({
-  iconUrl: '/images/map_marker_child.svg',
+  iconUrl: './images/map_marker_child.svg',
   shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
   iconSize: [32, 43],
   iconAnchor: [16, 43],
@@ -40,7 +40,7 @@ let childIcon = new L.Icon({
   popupAnchor: [0, -43],
 });
 let bothIcon = new L.Icon({
-  iconUrl: '/images/map_marker_both.svg',
+  iconUrl: './images/map_marker_both.svg',
   shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
   iconSize: [32, 43],
   iconAnchor: [16, 43],
@@ -49,7 +49,7 @@ let bothIcon = new L.Icon({
   popupAnchor: [0, -43],
 });
 let noneIcon = new L.Icon({
-  iconUrl: '/images/map_marker_none.svg',
+  iconUrl: './images/map_marker_none.svg',
   shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
   iconSize: [32, 43],
   iconAnchor: [16, 43],
