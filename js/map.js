@@ -143,11 +143,43 @@ export const extractPharmacies = (responseText) => {
 
 // popup layout
 const genPopup = (property) => {
+  // prepare string
+  let adultClassStr;
+  let adultMaskStr;
+  if (property.mask_adult > 0) {
+    adultClassStr = `has-adult-mask`;
+    adultMaskStr = `成人：${property.mask_adult} 個`;
+  }
+  else {
+    adultClassStr = `none-mask`;
+    adultMaskStr = `成人：已售完`;
+  }
+  let childClassStr;
+  let childMaskStr;
+  if (property.mask_child > 0) {
+    childClassStr = `has-child-mask`;
+    childMaskStr = `兒童：${property.mask_child} 個`;
+  }
+  else {
+    childClassStr = `none-mask`;
+    childMaskStr = `兒童：已售完`;
+  }
+
   return `
-  <h1>${property.name}</h1>
-  <div>成人：${property.mask_adult}</div>
-  <div>兒童：${property.mask_child}</div>
-  `
+  <div>
+    <div class="pharmacy-title">${property.name}</div>
+    <div class="pharmacy-info d-flex align-items-center">
+      <img class="info-icon" src="./images/icon_marker.svg" alt=""><a href="https://www.google.com/maps/search/${property.address}">${property.address}</a>
+    </div>
+    <div class="pharmacy-info d-flex align-items-center">
+      <img class="info-icon" src="./images/icon_phone.svg" alt="">${property.phone}
+    </div>
+    <div class="pharmacy-mask-info d-flex justify-content-between">
+      <div class="mask-info mask-info-adult ${adultClassStr}">${adultMaskStr}</div>
+      <div class="mask-info mask-info-child ${childClassStr}">${childMaskStr}</div>
+    </div>
+  </div>
+  `;
 }
 
 // 
@@ -193,14 +225,14 @@ export const findNearPharmacies = () => {
       let html = `
       <div class="pharmacy-title">${properties.name}</div>
       <div class="pharmacy-info d-flex align-items-center">
-        <img class="info-icon" src="./images/icon_marker.svg" alt="">${properties.address}
+        <img class="info-icon" src="./images/icon_marker.svg" alt=""><a href="https://www.google.com/maps/search/${properties.address}">${properties.address}</a>
       </div>
       <div class="pharmacy-info d-flex align-items-center">
         <img class="info-icon" src="./images/icon_phone.svg" alt="">${properties.phone}
       </div>
-      <div class="pharmacy-mask-info clear-fix">
-        <div class="mask-info mask-info-adult ${adultClassStr} float-left">${adultMaskStr}</div>
-        <div class="mask-info mask-info-child ${childClassStr} float-right">${childMaskStr}</div>
+      <div class="pharmacy-mask-info d-flex justify-content-between">
+        <div class="mask-info mask-info-adult ${adultClassStr}">${adultMaskStr}</div>
+        <div class="mask-info mask-info-child ${childClassStr}">${childMaskStr}</div>
       </div>
       `;
       a.innerHTML = html;
@@ -289,7 +321,7 @@ export const filterPharmacyList = (showAdult, showChild, hideSoldOut) => {
     let html = `
     <div class="pharmacy-title">${pharmacy.name}</div>
     <div class="pharmacy-info d-flex align-items-center">
-      <img class="info-icon" src="./images/icon_marker.svg" alt="">${pharmacy.address}
+      <img class="info-icon" src="./images/icon_marker.svg" alt=""><a href="https://www.google.com/maps/search/${pharmacy.address}">${pharmacy.address}</a>
     </div>
     <div class="pharmacy-info d-flex align-items-center">
       <img class="info-icon" src="./images/icon_phone.svg" alt="">${pharmacy.phone}
